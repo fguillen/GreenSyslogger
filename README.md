@@ -1,7 +1,5 @@
 # GreenLogger
 
-![GreenSyslogger logo](http://farm5.static.flickr.com/4060/5161504974_7dae687d7b_o_d.jpg)
-
 Syslogger that makes your life greener
 
 ## Install
