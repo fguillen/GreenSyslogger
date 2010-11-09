@@ -1,0 +1,5 @@
+Manifest
+README.md
+Rakefile
+lib/green_syslogger.rb
+test/green_syslogger_test.rb
