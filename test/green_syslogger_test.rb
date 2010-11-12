@@ -98,16 +98,28 @@ class GreenSysloggerTest < Test::Unit::TestCase
   
   def test_flush
     @syslog = @logger.instance_eval('@syslog')
-    Syslog.expects(:reopen).returns(@syslog).times(2)
-    @syslog.expects(:debug).times(2)
-    @syslog.expects(:info).times(2)
+    
+    reopen_order = sequence("reopen order")
+    Syslog.expects(:reopen).with('new tag', Syslog::LOG_PID, Syslog::LOG_LOCAL2).returns(@syslog).in_sequence(reopen_order)
+    Syslog.expects(:reopen).with('rails', Syslog::LOG_PID, Syslog::LOG_LOCAL2).returns(@syslog).in_sequence(reopen_order)
+    
+    debug_order = sequence("debug order")
+    @syslog.expects(:debug).with('[2010-10-10 10:10:10] wadus debug').in_sequence(debug_order)
+    @syslog.expects(:debug).with('[2010-10-10 10:10:10] wadus debug again').in_sequence(debug_order)
+    
+    info_order = sequence("info order")
+    @syslog.expects(:info).with('[2010-10-10 10:10:10] wadus info').in_sequence(info_order)
+    @syslog.expects(:info).with('[2010-10-10 10:10:10] wadus custom tag info').in_sequence(info_order)
     
     @logger.auto_flushing = false
-    @logger.debug('wadus debug')
-    @logger.info('wadus info')
-    @logger.custom('wadus custom tag info', 'new tag', :info)
-    @logger.debug('wadus info again')
 
+    Delorean.time_travel_to('2010-10-10 10:10:10') do
+      @logger.debug('wadus debug')
+      @logger.info('wadus info')
+      @logger.custom('wadus custom tag info', 'new tag', :info)
+      @logger.debug('wadus debug again')
+    end
+    
     @logger.flush
   end
   
