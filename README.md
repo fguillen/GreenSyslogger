@@ -1,5 +1,7 @@
 # GreenLogger
 
+![GreenSyslogger logo](http://farm5.static.flickr.com/4060/5161504974_7dae687d7b_o_d.jpg)
+
 Syslogger that makes your life greener
 
 ## Install
@@ -38,6 +40,8 @@ By default:
     logger.custom("my custom message", 'custom', :info)
 
 ## TODO
+
+In the `GreenSyslogger.custom` there are two reopen connections just to be allowed to change the `tag`, could be better to change the `tag` without reconnect.
 
 
 ## Credits
