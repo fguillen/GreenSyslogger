@@ -56,6 +56,8 @@ In the `GreenSyslogger.custom` there are two reopen connections just to be allow
 
 There is not `GreenSyslogger.silencer`. Maybe is a good idea to implemented.
 
+Benchmarking to compare with other logger libraries and to see with is the cost of the `reopen` calls.
+
 ## Change log
 
 ### v 0.2.0
